@@ -7,76 +7,92 @@
 
   <head>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+
+<script>
+
+function leffatEsiin() {
+
+}
+
+
+
+
+
+
+</script>
+
   </head>
 
-  <body>
+  <body style="background-color:#FAFAFA;">
 
-    <div class="jumbotron jumbotron-fluid dark">
-    <h1 class="display-2 text-center">MOVIETRON</h1>
-    <p class="lead text-center">Tää on se yks tehtävä siihen tehtävänantoon siitä yhestä kurssista. Mikähän se oli? Oliskohan ollu "Web-sovellusten kehittäminen JavaScriptillä"? Oli miten oli. Iskin tän valmiille "pohjalle" koska en jaksanu skrätsistä alottaa uutta, joten täs tää ny on. Pitäis vielä jaksaa vääntää sivu sen näköseks et täl ois jotain asiaankuuluvaakin. Syssymmällä si. <br> Tissit.</p>
+    <div class="jumbotron jumbotron-fluid" style="background-color: #4A3A5E;">
+    <h1 class="display-2 text-center" style="color: white;">MOVIETRON</h1>
+    <p class="lead text-center" style="color: #EBEBEB;"><br>Tää on se yks tehtävä siihen tehtävänantoon siitä yhestä kurssista. Mikähän se oli? Oliskohan ollu "Web-sovellusten kehittäminen JavaScriptillä"? Oli miten oli. Iskin tän valmiille "pohjalle" koska en jaksanu skrätsistä alottaa uutta, joten täs tää ny on. Pitäis vielä jaksaa vääntää sivu sen näköseks et täl ois jotain asiaankuuluvaakin. Syssymmällä si. <br> Tissit.</p>
   </div>
 
 <div class="container"> <!-- Container starts-->
-<div class="row text-center">
 
-   <div class="col-lg-3 col-md-6 mb-2">
-     <div class="card">
-       <img class="card-img-top" src="http://placehold.it/500x325" alt="">
-       <div class="card-body">
-         <h4 class="card-title">Tuote</h4>
-         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-       </div>
-       <div class="card-footer">
-         <a href="#" class="btn btn-secondary disabled">Hinta</a>
-         <a href="#" class="btn btn-primary">+</a>
-       </div>
-     </div>
-   </div>
-
-   <div class="col-lg-3 col-md-6 mb-4">
-     <div class="card">
-       <img class="card-img-top" src="http://placehold.it/500x325" alt="">
-       <div class="card-body">
-         <h4 class="card-title">Tuote</h4>
-         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
-       </div>
-       <div class="card-footer">
-         <a href="#" class="btn btn-secondary disabled">Hinta</a>
-         <a href="#" class="btn btn-primary">+</a>
-       </div>
-     </div>
-   </div>
-
-   <div class="col-lg-3 col-md-6 mb-4">
-     <div class="card">
-       <img class="card-img-top" src="http://placehold.it/500x325" alt="">
-       <div class="card-body">
-         <h4 class="card-title">Tuote</h4>
-         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-       </div>
-       <div class="card-footer">
-         <a href="#" class="btn btn-secondary disabled">Hinta</a>
-         <a href="#" class="btn btn-primary">+</a>
-       </div>
-     </div>
-   </div>
-
-   <div class="col-lg-3 col-md-6 mb-4">
-     <div class="card">
-       <img class="card-img-top" src="http://placehold.it/500x325" alt="">
-       <div class="card-body">
-         <h4 class="card-title">Tuote</h4>
-         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
-       </div>
-       <div class="card-footer">
-         <a href="#" class="btn btn-secondary disabled">Tähän tulee hinta</a>
-         <a href="#" class="btn btn-primary">+</a>
-       </div>
-     </div>
-   </div>
-
+  <div class="row text-center">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-10 mb-4">
+      <div class="d-flex justify-content-center flex-wrap">
+      <div class="pre-scrollable d-flex justify-content-center flex-wrap px-3 py-1" style="max-height: 200px;">
+          <button type="button" onclick="leffatEsiin()"class="btn btn-purply btn-block rounded">teatteri 1</button>
+          <button type="button" class="btn btn-info btn-block rounded">teatteri 2</button>
+          <button type="button" class="btn btn-info btn-block rounded">teatteri 3</button>
+          <button type="button" class="btn btn-info btn-block rounded">teatteri 4</button>
+          <button type="button" class="btn btn-info btn-block rounded">teatteri 5</button>
+          <button type="button" class="btn btn-info btn-block rounded">teatteri 6</button>
+    </div>
+    </div>
+  </div>
  </div>
-</div> <!-- container ends-->
+
+     <div id="movies" class="d-flex justify-content-center flex-wrap">
+     <div class="media border border-info rounded-more p-3">
+       <img class="img-fluid my-2" src="http://media.finnkino.fi/1012/Event_12315/portrait_small/ABeautifulPlanet_1080a.jpg" alt="mockup image">
+       <div class="media-body">
+         <h4>Tuote</h4>
+         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
+       </div>
+       <div>
+         <img class="img-fluid" src="https://media.finnkino.fi/images/rating_small_S.png" alt="rating">
+       </div>
+     </div>
+     <div class="media border border-info rounded-more p-3 my-2">
+       <img class="img-fluid" src="http://media.finnkino.fi/1012/Event_12315/portrait_small/ABeautifulPlanet_1080a.jpg" alt="mockup image">
+       <div class="media-body">
+         <h4>Tuote</h4>
+         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
+       </div>
+       <div>
+         <img class="img-fluid" src="https://media.finnkino.fi/images/rating_small_S.png" alt="rating">
+       </div>
+     </div>
+     <div class="media background bg-purply rounded p-3 my-2 text-white">
+       <img class="img-fluid" src="http://media.finnkino.fi/1012/Event_12315/portrait_small/ABeautifulPlanet_1080a.jpg" alt="mockup image">
+       <div class="media-body">
+         <h4>Tuote</h4>
+         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
+       </div>
+       <div>
+         <img class="img-fluid" src="https://media.finnkino.fi/images/rating_small_S.png" alt="rating">
+       </div>
+     </div>
+     <div class="media border border-info rounded p-3">
+       <img class="img-fluid" src="http://media.finnkino.fi/1012/Event_12315/portrait_small/ABeautifulPlanet_1080a.jpg" alt="mockup image">
+       <div class="media-body">
+         <h4>Tuote</h4>
+         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
+       </div>
+       <div>
+         <img class="img-fluid" src="https://media.finnkino.fi/images/rating_small_S.png" alt="rating">
+       </div>
+     </div>
+   </div>
+
+
+<!-- container ends-->
 
 
 <!-- Footer -->
@@ -84,7 +100,7 @@
  <div class="container">
    <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
 </div>
-  <div style="height: 1200px;">
+  <div style="height: 600px;">
   </div>
   </body>
 
