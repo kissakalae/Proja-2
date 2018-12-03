@@ -7,85 +7,138 @@
 
   <head>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="JavaScript" type="JavaScript" href="css/bootstrap.css">
 
 <script>
+
+function haeTeatterit() {
+
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET", "https://www.finnkino.fi/xml/TheatreAreas/", true);
+  xmlhttp.onreadystatechange = function() {
+  if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+    {
+    var doc = xmlhttp.responseXML;
+    var teatterit = doc.getElementsByTagName("Name");
+  //  var iidee = doc.getElementsByTagName("ID");
+    var boksi = document.getElementById('scrollBox');
+
+    document.getElementById("scrollBox").innerHTML = "";<!-- Tyhjentää tuloskentän -->
+    // console.log(iidee);
+
+    for (var i = 0; i < teatterit.length+1; i++) {
+        var teatterinNimi = document.createTextNode(teatterit[i+1].innerHTML);
+        var uusiTeatteri = document.createElement("button");
+        uusiTeatteri.classList.add('teatteri', 'btn', 'btn-purply', 'btn-block', 'rounded');
+        uusiTeatteri.onclick = function(){leffatEsiin()};
+        uusiTeatteri.appendChild(teatterinNimi);
+        boksi.appendChild(uusiTeatteri);
+       }
+    }
+  };
+  xmlhttp.send(null);
+  }
 
 function leffatEsiin() {
   var leffat = document.getElementsByClassName('leffaKortti');
   var teatterit = document.getElementsByClassName('teatteri');
   document.getElementById('pakoPainike').style.display = "inherit";
-  document.getElementById('scrollBox').classList.remove("pre-scrollable");
-  for (var i=0;i<leffat.length;i++){
-    leffat[i].style.display = "inherit";
-  }
-  for (var i=0;i<teatterit.length;i++){
-    teatterit[i].style.display="none";
+  var loota = document.getElementById("leffat");
+  loota.style.display = "inherit";
 
-  }
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET", "https://www.finnkino.fi/xml/Events/", true);
+  xmlhttp.onreadystatechange = function() {
+  if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+    {
+    document.getElementById("leffat").innerHTML = "";
+
+    var doc = xmlhttp.responseXML;
+    var leffojenNimet = doc.getElementsByTagName("OriginalTitle");
+    var kuvaus = doc.getElementsByTagName("ShortSynopsis");
+    var kuvat = doc.getElementsByTagName("EventSmallImagePortrait");
+
+    for (var i = 0; i < leffojenNimet.length; i++) {
+        var leffaBoksi = document.createElement("div");
+        leffaBoksi.classList.add('leffaKortti', 'media', 'border', 'bg-purply', 'rounded-more', 'p-3', 'full');
+        loota.appendChild(leffaBoksi);
+
+        var boksiContent = document.createElement('div');
+        boksiContent.classList.add('media-body');
+        leffaBoksi.appendChild(boksiContent);
+
+        var uusiTitle = document.createElement("h3");
+        var titleSisalto = document.createTextNode(leffojenNimet[i].innerHTML);
+        uusiTitle.appendChild(titleSisalto);
+        boksiContent.appendChild(uusiTitle);
+
+        var boksiKuvaus = document.createElement('p');
+        boksiKuvaus.classList.add('px-2');
+        var kuvausSisalto = document.createTextNode(kuvaus[i].innerHTML);
+        boksiKuvaus.appendChild(kuvausSisalto);
+        boksiContent.appendChild(boksiKuvaus);
+       }
+    }
+  };
+  xmlhttp.send(null);
+
 }
 
 function leffatPiiloon() {
   var leffat = document.getElementsByClassName('leffaKortti');
   var teatterit = document.getElementsByClassName('teatteri');
-  document.getElementById('scrollBox').classList.add("pre-scrollable");
   document.getElementById('pakoPainike').style.display = "none";
   for (var i=0;i<leffat.length;i++){
     leffat[i].style.display = "none";
   }
-  for (var i=0;i<teatterit.length;i++){
-    teatterit[i].style.display="inherit";
 
-  }
 }
-
-
 
 
 </script>
 
   </head>
 
-  <body style="background-color:#FAFAFA;">
+  <body onload="haeTeatterit()" style="background-color:#FAFAFA;">
 
     <div class="jumbotron jumbotron-fluid" style="background-color: #4A3A5E;">
-    <h1 class="display-2 text-center" style="color: white;">MOVIETRON</h1>
-    <p class="lead text-center" style="color: #EBEBEB;"><br>Tää on se yks tehtävä siihen tehtävänantoon siitä yhestä kurssista. Mikähän se oli? Oliskohan ollu "Web-sovellusten kehittäminen JavaScriptillä"? Oli miten oli. Iskin tän valmiille "pohjalle" koska en jaksanu skrätsistä alottaa uutta, joten täs tää ny on. Pitäis vielä jaksaa vääntää sivu sen näköseks et täl ois jotain asiaankuuluvaakin. Syssymmällä si. <br> Tissit.</p>
+    <h1 class="display-2 text-center" style="color: white;">FinnKino MOVIETRON</h1>
+    <p class="lead text-center" style="color: #EBEBEB;"><br>Tää on se yks tehtävä siihen tehtävänantoon siitä yhestä kurssista. Mikähän se oli? Oliskohan ollu "Web-sovellusten kehittäminen JavaScriptillä"? Oli miten oli. Iskin tän valmiille "pohjalle" koska en jaksanu skrätsistä alottaa uutta, joten täs tää ny on. Pitäis vielä jaksaa vääntää sivu sen näköseks et täl ois jotain asiaankuuluvaakin. Syssymmällä si. <br> Höpö.</p>
   </div>
 
 <div class="container"> <!-- Container starts-->
 
-  <div class="row text-center">
-    <div class="col-lg-1"></div>
-    <div class="col-lg-10 mb-4">
+<!-- lisätään tämä -->
+<div class="row text-center"> <!-- tämä on haeTeatterit() funktiolle -->
+  <!-- <button type="button" onclick="haeTeatterit()" class="btn btn-info btn-block rounded">HAE</button> -->
+</div>
+
+  <div class="row text-left">
+    <div class="col-lg-3 mb-2">
       <div class="teatteri d-flex justify-content-center flex-wrap">
-      <div id="scrollBox"class="teatteri pre-scrollable d-flex justify-content-center flex-wrap px-3 py-1" style="max-height: 200px;">
-          <button type="button" onclick="leffatEsiin()" class="teatteri btn btn-purply btn-block rounded">teatteri 1</button>
-          <button type="button" class="teatteri btn btn-info btn-block rounded">teatteri 2</button>
-          <button type="button" class="teatteri btn btn-info btn-block rounded">teatteri 3</button>
-          <button type="button" class="teatteri btn btn-info btn-block rounded">teatteri 4</button>
-          <button type="button" class="teatteri btn btn-info btn-block rounded">teatteri 5</button>
-          <button type="button" class="teatteri btn btn-info btn-block rounded">teatteri 6</button>
+      <div id="scrollBox" class="teatteri pre-scrollable d-flex justify-content-center flex-wrap mb-1" style="max-height: 250px;">
+      </div>
     </div>
-    </div>
-    <button id="pakoPainike" type="button" class="btn btn-dark offset-sm-0" style="display:none;" onclick="leffatPiiloon()"> < back</button>
+    <button id="pakoPainike" type="button" class="btn btn-dark left mb-2" style="display:none; max-height:" onclick="leffatPiiloon()" onclick="haeTeatterit()"> < back</button>
+
   </div>
 
-     <div id="leffat" class="d-flex justify-content-center flex-wrap" style="display:none;">
-     <div style="display:none;" class="leffaKortti media border border-info rounded-more p-3">
+     <div id="leffat" class="col-lg-9 d-flex justify-content-center flex-wrap" style="display:none;">
+     <div style="display:none;" class="leffaKortti media border bg-purply rounded-more p-3">
        <img class="img-fluid my-2" src="http://media.finnkino.fi/1012/Event_12315/portrait_small/ABeautifulPlanet_1080a.jpg" alt="mockup image">
        <div class="media-body">
          <h4>Tuote</h4>
-         <p class="mx-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
+         <p class="px-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
        </div>
        <div>
          <img class="img-fluid" src="https://media.finnkino.fi/images/rating_small_S.png" alt="rating">
        </div>
      </div>
-     <div style="display:none;" class="leffaKortti media border border-info rounded-more p-3 my-2">
+     <div style="display:none;" class="leffaKortti media border bg-purply rounded-more p-3 my-2">
        <img class="img-fluid" src="http://media.finnkino.fi/1012/Event_12315/portrait_small/ABeautifulPlanet_1080a.jpg" alt="mockup image">
        <div class="media-body">
          <h4>Tuote</h4>
-         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
+         <p class="mx-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo magni sapiente, tempore debitis beatae culpa natus architecto.</p>
        </div>
        <div>
          <img class="img-fluid" src="https://media.finnkino.fi/images/rating_small_S.png" alt="rating">

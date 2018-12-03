@@ -6160,6 +6160,7 @@ button.bg-info:focus {
 
 .bg-purply {
   background-color: #4A3A5E !important;
+  color: #FAFAFA;
 }
 
 a.bg-purply:hover, a.bg-purply:focus,
@@ -9087,4 +9088,20 @@ a.text-dark:hover, a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
+
+/* OMAT TÄGIT */
+
+.teatteri {
+  text-align: left;
+  float: left;
+  max-width: 300px;
+  padding-right: 10px;
+}
+
+  .full {
+    min-width: 100%;
+    width: 100%;
+    max-width: 100%;
+  }
+
 /*# sourceMappingURL=bootstrap.css.map */
