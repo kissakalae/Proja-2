@@ -20,16 +20,18 @@ function haeTeatterit() {
     {
     var doc = xmlhttp.responseXML;
     var teatterit = doc.getElementsByTagName("Name");
-  //  var iidee = doc.getElementsByTagName("ID");
     var boksi = document.getElementById('scrollBox');
 
     document.getElementById("scrollBox").innerHTML = "";<!-- Tyhjentää tuloskentän -->
-    // console.log(iidee);
+    var iidee = doc.getElementsByTagName("ID");
+
 
     for (var i = 0; i < teatterit.length+1; i++) {
+        var intit = iidee[i]["innerHTML"];
+        console.log(intit);
         var teatterinNimi = document.createTextNode(teatterit[i+1].innerHTML);
         var uusiTeatteri = document.createElement("button");
-        uusiTeatteri.classList.add('teatteri', 'btn', 'btn-purply', 'btn-block', 'rounded');
+        uusiTeatteri.classList.add('teatteri', 'btn', 'btn-light', 'btn-block', 'rounded');
         uusiTeatteri.onclick = function(){leffatEsiin()};
         uusiTeatteri.appendChild(teatterinNimi);
         boksi.appendChild(uusiTeatteri);
@@ -37,7 +39,7 @@ function haeTeatterit() {
     }
   };
   xmlhttp.send(null);
-  }
+}
 
 function leffatEsiin() {
   var leffat = document.getElementsByClassName('leffaKortti');
@@ -47,13 +49,14 @@ function leffatEsiin() {
   loota.style.display = "inherit";
 
   var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET", "https://www.finnkino.fi/xml/Events/", true);
+  xmlhttp.open("GET", "https://www.finnkino.fi/xml/Events/?area=", true);
   xmlhttp.onreadystatechange = function() {
   if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
     {
     document.getElementById("leffat").innerHTML = "";
 
     var doc = xmlhttp.responseXML;
+
     var leffojenNimet = doc.getElementsByTagName("OriginalTitle");
     var kuvaus = doc.getElementsByTagName("ShortSynopsis");
     var kuvat = doc.getElementsByTagName("EventSmallImagePortrait");
@@ -81,7 +84,6 @@ function leffatEsiin() {
     }
   };
   xmlhttp.send(null);
-
 }
 
 function leffatPiiloon() {
@@ -115,12 +117,12 @@ function leffatPiiloon() {
 
   <div class="row text-left">
     <div class="col-lg-3 mb-2">
-      <div class="teatteri d-flex justify-content-center flex-wrap">
-      <div id="scrollBox" class="teatteri pre-scrollable d-flex justify-content-center flex-wrap mb-1" style="max-height: 250px;">
+      <div class="teatteri d-flex justify-content-center flex-wrap bg-purply pt-3 pb-2 rounded-more">
+        <h5 class="pb-2"> Teatteri: </h5>
+      <div id="scrollBox" class="teatteri pre-scrollable d-flex justify-content-center rounded-more bg-purply flex-wrap mb-1 p-2" style="max-height: 250px;">
       </div>
+        <button id="pakoPainike" type="button" class="btn btn-light mt-1" style="display:none;" onclick="leffatPiiloon()" onclick="haeTeatterit()"> < back</button>
     </div>
-    <button id="pakoPainike" type="button" class="btn btn-dark left mb-2" style="display:none; max-height:" onclick="leffatPiiloon()" onclick="haeTeatterit()"> < back</button>
-
   </div>
 
      <div id="leffat" class="col-lg-9 d-flex justify-content-center flex-wrap" style="display:none;">
@@ -172,12 +174,12 @@ function leffatPiiloon() {
 
 
 <!-- Footer -->
-<footer class="py-5 bg-dark">
- <div class="container">
-   <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
-</div>
-  <div style="height: 600px;">
-  </div>
+
   </body>
+  <footer class="py-5 bg-dark full">
+   <div class="container bg-dark full">
+     <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+  </div>
+
 
 </html>

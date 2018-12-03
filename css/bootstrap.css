@@ -9104,4 +9104,8 @@ a.text-dark:hover, a.text-dark:focus {
     max-width: 100%;
   }
 
+  .left {
+    margin-left: -100px;
+  }
+
 /*# sourceMappingURL=bootstrap.css.map */
