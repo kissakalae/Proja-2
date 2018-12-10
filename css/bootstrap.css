@@ -5150,6 +5150,7 @@ input[type="button"].btn-block {
 .media-body {
   -ms-flex: 1;
   flex: 1;
+  padding-left: 1em;
 }
 
 .list-group {
@@ -9098,6 +9099,10 @@ a.text-dark:hover, a.text-dark:focus {
   padding-right: 10px;
 }
 
+  .varjo {
+    box-shadow: 2px 3px rgba(74,58,94,0.5);
+  }
+
   .full {
     min-width: 100%;
     width: 100%;
@@ -9107,5 +9112,7 @@ a.text-dark:hover, a.text-dark:focus {
   .left {
     margin-left: -100px;
   }
+
+
 
 /*# sourceMappingURL=bootstrap.css.map */
