@@ -11,153 +11,209 @@
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
 
-<script>
 
-
-
-
-/* function haeXML(url, haluttuFunktio) {
-  var xmlhttp = new XMLHttpRequest();
-
-  xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200){
-
-      haluttuFunktio(this);
-
-    }
-  };
-  xmlhttp.open("GET", url, true);
-  xmlhttp.send(null);
-}
-
-function haeTeatterit(xmlhttp) {
-  var doc = xmlhttp.responseXML;
-  var teatterit = doc.getElementsByTagName("Name");
-  var iidee = doc.getElementsByTagName("ID");
-  var boksi = document.getElementById('scrollBox');
-  document.getElementById("scrollBox").innerHTML = "";<!-- Tyhjentää tuloskentän -->
-
-  for (var i = 1; i < teatterit.length; i++) {
-      var teatteriTxtNode = document.createTextNode(teatterit[i].innerHTML);
-      teatteriBtn = document.createElement("button");
-      teatteriBtn.classList.add('teatteri', 'btn', 'btn-light', 'btn-block', 'rounded');
-      teatteriBtn.value = iidee[i].innerHTML;
-      teatteriBtn.onclick = function(){
-          haeXML(("https://www.finnkino.fi/xml/Schedule/?area=" + this.value),leffatEsiin)};
-      teatteriBtn.appendChild(teatteriTxtNode);
-      boksi.appendChild(teatteriBtn);
-     }
-}*/
-
-function haeTeatterit() {
-  $('scrollbox').empty();
-  $.get("https://www.finnkino.fi/xml/TheatreAreas/", function (doc){
-    var teatterit = $(doc).find('Name');
-    var iidee = $(doc).find('ID');
-
-    for (var i = 1; i < teatterit.length; i++) {
-
-      var teatteriBtn = $('<button></button>')
-          .text(teatterit[i].innerHTML)
-          .addClass("teatteri btn btn-light btn-block rounded teatteriBtn")
-          .attr("value",iidee[i].innerHTML);
-      $("#scrollBox").append(teatteriBtn);
-
-      $("#scrollBox").on("click",".teatteriBtn", function(){
-        $("#leffat").empty();
-        leffatEsiin(this.value);
-      });
-
-    }
-
-  });
-}
-
-function leffatEsiin(iidee){
-  $('#pakoPainike').show();
-  $('#leffat').empty();
-  var url = ("https://www.finnkino.fi/xml/Events/?area="+iidee);
-  $.get(url,function (doc){
-
-    var tapahtumat = $(doc).find("OriginalTitle");
-    var kuvat = $(doc).find("EventSmallImagePortrait");
-		var synopsis = $(doc).find("ShortSynopsis");
-		var vuosi = $(doc).find("ProductionYear");
-
-    for (var j = 0; j < tapahtumat.length; j++) {
-      var leffaBoksi = $('<div></div>')
-          .addClass('leffaKortti media border bg-purply rounded-more p-3 full');
-          $('#leffat').append(leffaBoksi);
-
-      var thumbNail = $('<img/>').attr("src",kuvat[j].innerHTML).addClass("img-fluid");
-      $(leffaBoksi).prepend(thumbNail);
-
-      var desc = $("<div></div>").addClass("media-body desc");
-      $(leffaBoksi).append(desc);
-
-      var otsikko = $("<h4></h4>").text((tapahtumat[j].innerHTML + " (" + vuosi[j].innerHTML+")"));
-      $(desc).prepend(otsikko);
-
-			var kuvaus = $("<h6></h6>").text(synopsis[j].innerHTML);
-      $(desc).append(kuvaus);
-    }
-
-  });
-
-}
-
-/*function leffatEsiin(xmlhttp) {
-  var doc = xmlhttp.responseXML;
-  var leffat = document.getElementsByClassName('leffaKortti');
-  var teatterit = document.getElementsByClassName('teatteri');
-  document.getElementById('pakoPainike').style.display = "inherit";
-  var loota = document.getElementById("leffat");
-  loota.style.display = "inherit";
-
-  document.getElementById("leffat").innerHTML = "";
-
-  var leffojenNimet = doc.getElementsByTagName("OriginalTitle");
-  var kuvat = doc.getElementsByTagName("EventSmallImagePortrait");
-
-    for (var i = 0; i < leffojenNimet.length; i++) {
-        var leffaBoksi = document.createElement("div");
-        leffaBoksi.classList.add('leffaKortti', 'media', 'border', 'bg-purply', 'rounded-more', 'p-3', 'full');
-        loota.appendChild(leffaBoksi);
-
-        var thumbNail = document.createElement("img");
-        thumbNail.src=kuvat[i].innerHTML;
-        thumbNail.classList.add('img-fluid');
-        leffaBoksi.appendChild(thumbNail);
-
-        var boksiContent = document.createElement('div');
-        boksiContent.classList.add('media-body');
-        leffaBoksi.appendChild(boksiContent);
-
-        var uusiTitle = document.createElement("h4");
-        var titleSisalto = document.createTextNode(leffojenNimet[i].innerHTML);
-        uusiTitle.appendChild(titleSisalto);
-        boksiContent.appendChild(uusiTitle);
-
-       }
-
-}
-*/
-
-/* Tämä on paluupainikkeen funktio. Se antaa käyttäjän tyhjentää tapahtumalistan. */
-$(function(){
-  $("#pakoPainike").click(function() {
-    $("#leffat").empty();
-		$("#pakoPainike").hide();
-  });
-});
-
-
-</script>
 
   </head>
 
   <body style="background-color:#FAFAFA;" onload="haeTeatterit()">
+		<script>
 
+
+
+
+		/* function haeXML(url, haluttuFunktio) {
+		  var xmlhttp = new XMLHttpRequest();
+
+		  xmlhttp.onreadystatechange = function() {
+		  if (this.readyState == 4 && this.status == 200){
+
+		      haluttuFunktio(this);
+
+		    }
+		  };
+		  xmlhttp.open("GET", url, true);
+		  xmlhttp.send(null);
+		}
+
+		function haeTeatterit(xmlhttp) {
+		  var doc = xmlhttp.responseXML;
+		  var teatterit = doc.getElementsByTagName("Name");
+		  var iidee = doc.getElementsByTagName("ID");
+		  var boksi = document.getElementById('scrollBox');
+		  document.getElementById("scrollBox").innerHTML = "";<!-- Tyhjentää tuloskentän -->
+
+		  for (var i = 1; i < teatterit.length; i++) {
+		      var teatteriTxtNode = document.createTextNode(teatterit[i].innerHTML);
+		      teatteriBtn = document.createElement("button");
+		      teatteriBtn.classList.add('teatteri', 'btn', 'btn-light', 'btn-block', 'rounded');
+		      teatteriBtn.value = iidee[i].innerHTML;
+		      teatteriBtn.onclick = function(){
+		          haeXML(("https://www.finnkino.fi/xml/Schedule/?area=" + this.value),leffatEsiin)};
+		      teatteriBtn.appendChild(teatteriTxtNode);
+		      boksi.appendChild(teatteriBtn);
+		     }
+		}*/
+
+/* haeTeatteri() -funktio tekee XML-haun käyttäen jQueryn .get()-metodia.
+ 	 Tätä funktiota kutsutaan <body>-elementin onload- tapahtumakutsulla.   */
+		function haeTeatterit() {
+			/*   ensin tyhjennetään kenttä, jonne teatterit tulevat  */
+		  $('scrollbox').empty();
+
+			/* jQueryn .get()-metodi vastaa JavaScriptin XHR-tapahtumaa.
+			   Funktion parametreinä ovat haluttu osoite ja toinen parametri itsessään
+				 on funktio, joka suoritetaan onnistuneen XMLHttpRequest:n jälkeen.			*/
+
+		  $.get("https://www.finnkino.fi/xml/TheatreAreas/", function (doc){
+
+			/* Tässä tapauksessa tallennetaan XHR-olio muuttujaan doc, josta haetaan
+			  	halutut tiedot .find() funktioilla. Tämä vastaa getElementsByTagNamen
+					käyttöä Ajax:ssa ilman jQuerya.	*/
+
+		    var teatterit = $(doc).find('Name');
+		    var iidee = $(doc).find('ID');
+
+			/*	For looppi luo <button> -elementin jokaiselle elokuvateatterille,
+					joka löytyy XML-tiedostosta. Niille asetetaan luokat tyylitystä
+					ja tunnistusta varten ja liitetään #scrollBox-diviin yksi kerrallaan.*/
+
+		    for (var i = 1; i < teatterit.length; i++) {
+
+		      var teatteriBtn = $('<button></button>')
+		          .text(teatterit[i].innerHTML)
+		          .addClass("teatteri btn btn-light btn-block rounded teatteriBtn")
+		          .attr("value",iidee[i].innerHTML);
+		      $("#scrollBox").append(teatteriBtn);
+		    }
+
+				/* For-loopin jälkeen käytetään .on()-metodia lisäämään tapahtumakutsu
+						metodille, joka lataa toisesta XML-tiedostosta FinnKinon tapahtumat.
+						Kutsu käyttää parametrinä buttonille asetettua value-attribuutia, joka vastaa
+						teatterin ID:tä. Näin saadaan paikallistettua elokuvatarjonta.*/
+
+				$("#scrollBox").on("click",".teatteriBtn", function(){
+					$("#leffat").empty();
+					leffatEsiin(this.value);
+				});
+		  });
+		}
+
+
+/* Tämä funktio ottaa parametrinä painetun napin value-attribuuin. Se liitetään
+  	URL-osoitteeseen FinnKinon "events"-XML-tiedostossa, jotta saadaan paikalliset tiedot.*/
+		function leffatEsiin(iidee){
+			$("#haeLeffaa").show();
+		  $('#pakoPainike').show();
+		  $('#leffat').empty();
+		  var url = ("https://www.finnkino.fi/xml/Events/?area="+iidee);
+		  $.get(url,function (doc){
+				var eventId = $(doc).find("ID");
+		    var tapahtumat = $(doc).find("OriginalTitle");
+		    var kuvat = $(doc).find("EventSmallImagePortrait");
+				var synopsis = $(doc).find("ShortSynopsis");
+				var vuosi = $(doc).find("ProductionYear");
+				/* Tämä on käytännössä täysin samoin kuin haeTeatterit()-funktiossa.
+					Jokaista tapahtumaa kohden luodaan oma <div>, jonne sijoitetaan tiedot.*/
+		    for (var j = 0; j < tapahtumat.length; j++) {
+
+		      var leffaBoksi = $('<div></div>')
+		          .addClass('leffaKortti media border bg-purply rounded-more p-3 full');
+		      $('#leffat').append(leffaBoksi);
+
+		      var thumbNail = $('<img/>').attr("src",kuvat[j].innerHTML)
+							.addClass("img-fluid");
+		      $(leffaBoksi).prepend(thumbNail);
+
+		      var desc = $("<div></div>").addClass("media-body desc");
+		      $(leffaBoksi).append(desc);
+
+		      var otsikko = $("<h4></h4>").text((tapahtumat[j].innerHTML + " (" + vuosi[j].innerHTML+")"));
+		      $(desc).prepend(otsikko);
+
+					var kuvaus = $("<p></p>").text(synopsis[j].innerHTML);
+		      $(desc).append(kuvaus);
+		    }
+
+		  });
+
+		}
+
+
+/* Elokuvia varten on hakupalkki, johon liitetään ensin erillisellä funktiolla
+ 		keyup()-tapahtumakuuntelija, joka reagoi syötteeseen.*/
+
+	$(function(){
+		$("#haeLeffaa").keyup(haeLeffaa);
+	});
+
+/* Tämä funktio ottaa hakukentän value-attribuutin joka kerta, kun
+	näppäimistöltä otetaan syöte vastaan kentässä. Tätä attribuuttia
+	verrataan .each()-metodilla ja sen sisäisellä funktiolla kaikkiin
+	.leffaKortti-<div>-elementtien sisäisiin <h4>-elementteihin.
+	Funktio piilottaa ne elementit, jotka eivät täsää hakua.					*/
+
+	function haeLeffaa () {
+		var haku = $(this).val().toLowerCase();
+		$(".leffaKortti h4").each(function(){
+			var leffa = $(this).text().toLowerCase();
+
+			if (leffa.indexOf(haku) !== -1) {
+				$(this).parent().parent().show();
+			} else {
+				$(this).parent().parent().hide();
+			}
+
+		});
+	}
+
+		/*function leffatEsiin(xmlhttp) {
+		  var doc = xmlhttp.responseXML;
+		  var leffat = document.getElementsByClassName('leffaKortti');
+		  var teatterit = document.getElementsByClassName('teatteri');
+		  document.getElementById('pakoPainike').style.display = "inherit";
+		  var loota = document.getElementById("leffat");
+		  loota.style.display = "inherit";
+
+		  document.getElementById("leffat").innerHTML = "";
+
+		  var leffojenNimet = doc.getElementsByTagName("OriginalTitle");
+		  var kuvat = doc.getElementsByTagName("EventSmallImagePortrait");
+
+		    for (var i = 0; i < leffojenNimet.length; i++) {
+		        var leffaBoksi = document.createElement("div");
+		        leffaBoksi.classList.add('leffaKortti', 'media', 'border', 'bg-purply', 'rounded-more', 'p-3', 'full');
+		        loota.appendChild(leffaBoksi);
+
+		        var thumbNail = document.createElement("img");
+		        thumbNail.src=kuvat[i].innerHTML;
+		        thumbNail.classList.add('img-fluid');
+		        leffaBoksi.appendChild(thumbNail);
+
+		        var boksiContent = document.createElement('div');
+		        boksiContent.classList.add('media-body');
+		        leffaBoksi.appendChild(boksiContent);
+
+		        var uusiTitle = document.createElement("h4");
+		        var titleSisalto = document.createTextNode(leffojenNimet[i].innerHTML);
+		        uusiTitle.appendChild(titleSisalto);
+		        boksiContent.appendChild(uusiTitle);
+
+		       }
+
+		}
+		*/
+
+		/* Tämä on paluupainikkeen funktio. Se antaa käyttäjän tyhjentää tapahtumalistan. */
+		$(function(){
+		  $("#pakoPainike").click(function() {
+		    $("#leffat").empty();
+				$("#pakoPainike").hide();
+				$("#haeLeffaa").hide();
+		  });
+		});
+
+
+		</script>
     <div class="jumbotron jumbotron-fluid" style="background-color: #4A3A5E;">
     <h1 class="display-2 text-center" style="color: white;">FinnKino MOVIETRON</h1>
     <p class="lead text-center" style="color: #EBEBEB;"><br>Tää on se yks tehtävä siihen tehtävänantoon siitä yhestä kurssista. Mikähän se oli? Oliskohan ollu "Web-sovellusten kehittäminen JavaScriptillä"? Oli miten oli. Iskin tän valmiille "pohjalle" koska en jaksanu skrätsistä alottaa uutta, joten täs tää ny on. Pitäis vielä jaksaa vääntää sivu sen näköseks et täl ois jotain asiaankuuluvaakin. Syssymmällä si. <br> Höpö.</p>
@@ -181,7 +237,7 @@ $(function(){
   </div>
 		<div class="col-lg-9 d-flex justify-content-center flex-wrap">
 		<div class="ylaPalkki col-lg-9 mb-3 full bg-purply varjo rounded d-flex justify-content-center flex-wrap" style="height:50px;">
-			<p> Tähän vois tulla jotain hassua, kuten esim search-functio tjms hölmöä.</p>
+			<input type="text" id="haeLeffaa" placeholder="Hae tapahtuman nimellä" style="display:none;">
 		</div>
      <div id="leffat" class="col-lg-9 pre-scrollable d-flex justify-content-center flex-wrap full"
                       style="display:none;max-height:410px;">
