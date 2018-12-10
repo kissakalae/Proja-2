@@ -7,10 +7,16 @@
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 <link rel="JavaScript" type="JavaScript" href="css/bootstrap.css">
 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+
 <script>
 
-function haeXML(url, haluttuFunktio) {
-  console.log("got this far");
+
+
+
+/* function haeXML(url, haluttuFunktio) {
   var xmlhttp = new XMLHttpRequest();
 
   xmlhttp.onreadystatechange = function() {
@@ -24,33 +30,83 @@ function haeXML(url, haluttuFunktio) {
   xmlhttp.send(null);
 }
 
-function asetaId(arvo){
-  console.log(arvo);
-  haeXML(("https://www.finnkino.fi/xml/Schedule/?area=" + arvo),leffatEsiin);
-}
-
 function haeTeatterit(xmlhttp) {
+  var doc = xmlhttp.responseXML;
+  var teatterit = doc.getElementsByTagName("Name");
+  var iidee = doc.getElementsByTagName("ID");
+  var boksi = document.getElementById('scrollBox');
+  document.getElementById("scrollBox").innerHTML = "";<!-- Tyhjentää tuloskentän -->
 
-    var doc = xmlhttp.responseXML;
-    var teatterit = doc.getElementsByTagName("Name");
-    var iidee = doc.getElementsByTagName("ID");
-    var boksi = document.getElementById('scrollBox');
-    document.getElementById("scrollBox").innerHTML = "";<!-- Tyhjentää tuloskentän -->
+  for (var i = 1; i < teatterit.length; i++) {
+      var teatteriTxtNode = document.createTextNode(teatterit[i].innerHTML);
+      teatteriBtn = document.createElement("button");
+      teatteriBtn.classList.add('teatteri', 'btn', 'btn-light', 'btn-block', 'rounded');
+      teatteriBtn.value = iidee[i].innerHTML;
+      teatteriBtn.onclick = function(){
+          haeXML(("https://www.finnkino.fi/xml/Schedule/?area=" + this.value),leffatEsiin)};
+      teatteriBtn.appendChild(teatteriTxtNode);
+      boksi.appendChild(teatteriBtn);
+     }
+}*/
+
+function haeTeatterit() {
+  $('scrollbox').empty();
+  $.get("https://www.finnkino.fi/xml/TheatreAreas/", function (doc){
+    var teatterit = $(doc).find('Name');
+    var iidee = $(doc).find('ID');
 
     for (var i = 1; i < teatterit.length; i++) {
-      console.log("this far too");
-        var teatteriTxtNode = document.createTextNode(teatterit[i].innerHTML);
-        teatteriBtn = document.createElement("button");
-        teatteriBtn.classList.add('teatteri', 'btn', 'btn-light', 'btn-block', 'rounded');
-        teatteriBtn.value = iidee[i].innerHTML;
-        teatteriBtn.onclick = function(){asetaId(this.value)};
-        teatteriBtn.appendChild(teatteriTxtNode);
-        boksi.appendChild(teatteriBtn);
-       }
+
+      var teatteriBtn = $('<button></button>')
+          .text(teatterit[i].innerHTML)
+          .addClass("teatteri btn btn-light btn-block rounded teatteriBtn")
+          .attr("value",iidee[i].innerHTML);
+      $("#scrollBox").append(teatteriBtn);
+
+      $("#scrollBox").on("click",".teatteriBtn", function(){
+        $("#leffat").empty();
+        leffatEsiin(this.value);
+      });
+
+    }
+
+  });
+}
+
+function leffatEsiin(iidee){
+  $('#pakoPainike').show();
+  $('#leffat').empty();
+  var url = ("https://www.finnkino.fi/xml/Events/?area="+iidee);
+  $.get(url,function (doc){
+
+    var tapahtumat = $(doc).find("OriginalTitle");
+    var kuvat = $(doc).find("EventSmallImagePortrait");
+		var synopsis = $(doc).find("ShortSynopsis");
+		var vuosi = $(doc).find("ProductionYear");
+
+    for (var j = 0; j < tapahtumat.length; j++) {
+      var leffaBoksi = $('<div></div>')
+          .addClass('leffaKortti media border bg-purply rounded-more p-3 full');
+          $('#leffat').append(leffaBoksi);
+
+      var thumbNail = $('<img/>').attr("src",kuvat[j].innerHTML).addClass("img-fluid");
+      $(leffaBoksi).prepend(thumbNail);
+
+      var desc =   $("<div></div>").addClass("media-body desc");
+      $(leffaBoksi).append(desc);
+
+      var otsikko = $("<h4></h4>").text((tapahtumat[j].innerHTML + " (" + vuosi[j].innerHTML+")"));
+      $(desc).prepend(otsikko);
+
+			var kuvaus = $("<h6></h6>").text(synopsis[j].innerHTML);
+      $(desc).append(kuvaus);
+    }
+
+  });
 
 }
 
-function leffatEsiin(xmlhttp) {
+/*function leffatEsiin(xmlhttp) {
   var doc = xmlhttp.responseXML;
   var leffat = document.getElementsByClassName('leffaKortti');
   var teatterit = document.getElementsByClassName('teatteri');
@@ -85,21 +141,21 @@ function leffatEsiin(xmlhttp) {
        }
 
 }
+*/
 
-function leffatPiiloon() {
-  var leffat = document.getElementsByClassName('leffaKortti');
-  var teatterit = document.getElementsByClassName('teatteri');
-  document.getElementById('pakoPainike').style.display = "none";
-
-  document.getElementById("leffat").innerHTML = "";
-}
+/* Tämä on paluupainikkeen funktio. Se antaa käyttäjän tyhjentää tapahtumalistan. */
+$(function(){
+  $("#pakoPainike").click(function() {
+    $("#leffat").empty();
+  });
+});
 
 
 </script>
 
   </head>
 
-  <body style="background-color:#FAFAFA;" onload="haeXML('https://www.finnkino.fi/xml/TheatreAreas/',haeTeatterit)">
+  <body style="background-color:#FAFAFA;" onload="haeTeatterit()">
 
     <div class="jumbotron jumbotron-fluid" style="background-color: #4A3A5E;">
     <h1 class="display-2 text-center" style="color: white;">FinnKino MOVIETRON</h1>
@@ -119,11 +175,12 @@ function leffatPiiloon() {
         <h5 class="pb-2"> Teatteri: </h5>
       <div id="scrollBox" class="teatteri pre-scrollable d-flex justify-content-center rounded-more bg-purply flex-wrap mb-1 p-2" style="max-height: 300px;">
       </div>
-        <button id="pakoPainike" type="button" class="btn btn-light mt-1" style="display:none;" onclick="leffatPiiloon()" onclick="haeTeatterit()"> < back</button>
+        <button id="pakoPainike" type="button" class="btn btn-light mt-1" style="display:none;">< back</button>
     </div>
   </div>
 
-     <div id="leffat" class="col-lg-9 d-flex justify-content-center flex-wrap" style="display:none;">
+     <div id="leffat" class="col-lg-9 pre-scrollable d-flex justify-content-center flex-wrap"
+                      style="display:none;max-height:410px;">
    </div>
  </div>
 
