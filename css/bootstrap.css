@@ -9113,6 +9113,21 @@ a.text-dark:hover, a.text-dark:focus {
     margin-left: -100px;
   }
 
+  .inputBox {
+    height: 30px;
+    margin-top: 3px;
+    box-shadow: inset 0px 0 2px 1px rgb(0,0,0,0.5);
+    border: none;
+    padding-left: 1em;
+    margin: auto;
+    margin-left: 10px;
+  }
 
+  .alaBoksi {
+    float: right;
+  }
 
+  .ninety {
+    min-width: 90%;
+  }
 /*# sourceMappingURL=bootstrap.css.map */

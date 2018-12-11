@@ -105,6 +105,7 @@
 			$("#haeLeffaa").show();
 		  $('#pakoPainike').show();
 		  $('#leffat').empty();
+			$("tietoNappi").show();
 		  var url = ("https://www.finnkino.fi/xml/Events/?area="+iidee);
 		  $.get(url,function (doc){
 				var eventId = $(doc).find("ID");
@@ -117,21 +118,25 @@
 		    for (var j = 0; j < tapahtumat.length; j++) {
 
 		      var leffaBoksi = $('<div></div>')
-		          .addClass('leffaKortti media border bg-purply rounded-more p-3 full');
+		          .addClass('leffaKortti media bg-purply rounded-more p-3 my-1 full varjo');
 		      $('#leffat').append(leffaBoksi);
 
 		      var thumbNail = $('<img/>').attr("src",kuvat[j].innerHTML)
 							.addClass("img-fluid");
 		      $(leffaBoksi).prepend(thumbNail);
 
-		      var desc = $("<div></div>").addClass("media-body desc");
+		      var desc = $("<div></div>").addClass("media-body desc ninety");
 		      $(leffaBoksi).append(desc);
 
 		      var otsikko = $("<h4></h4>").text((tapahtumat[j].innerHTML + " (" + vuosi[j].innerHTML+")"));
 		      $(desc).prepend(otsikko);
 
+					var tietoBoksi = $("<div></div>")
+								.addClass('alaBoksi bg-purply ninety');
+					$(leffaBoksi).append(tietoBoksi);
+
 					var kuvaus = $("<p></p>").text(synopsis[j].innerHTML);
-		      $(desc).append(kuvaus);
+		      $(tietoBoksi).append(kuvaus);
 		    }
 
 		  });
@@ -209,6 +214,7 @@
 		    $("#leffat").empty();
 				$("#pakoPainike").hide();
 				$("#haeLeffaa").hide();
+				$("#tietoNappi").hide();
 		  });
 		});
 
@@ -237,10 +243,15 @@
   </div>
 		<div class="col-lg-9 d-flex justify-content-center flex-wrap">
 		<div class="ylaPalkki col-lg-9 mb-3 full bg-purply varjo rounded d-flex justify-content-center flex-wrap" style="height:50px;">
-			<input type="text" id="haeLeffaa" placeholder="Hae tapahtuman nimellä" style="display:none;">
+			<input type="text" id="haeLeffaa" class="inputBox rounded-more media-box" placeholder="Hae tapahtuman nimellä" style="display:none;">
 		</div>
      <div id="leffat" class="col-lg-9 pre-scrollable d-flex justify-content-center flex-wrap full"
-                      style="display:none;max-height:410px;">
+                      style="display:none;max-height:180px;">
+
+			<button id="tietoNappi" type="button" class="col-lg-9 bg-purply full" onclick="naytaLisaa()" style=""> Show more </button>
+
+			<div id="tietoBoksi" class="tietoBoksi alaBoksi">
+		</div>
    	</div>
 	</div>
  </div>
