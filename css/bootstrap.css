@@ -9092,7 +9092,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 /* OMAT TÄGIT */
 
-.teatteri {
+  .teatteri {
   text-align: left;
   float: left;
   max-width: 300px;
@@ -9100,7 +9100,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
   .varjo {
-    box-shadow: 2px 3px rgba(74,58,94,0.5);
+    box-shadow: 2px 3px rgba(74, 58, 94, 0.5);
   }
 
   .full {
@@ -9114,20 +9114,34 @@ a.text-dark:hover, a.text-dark:focus {
   }
 
   .inputBox {
-    height: 30px;
-    margin-top: 3px;
-    box-shadow: inset 0px 0 2px 1px rgb(0,0,0,0.5);
-    border: none;
-    padding-left: 1em;
-    margin: auto;
-    margin-left: 10px;
+  height: 30px;
+  margin-top: 3px;
+  box-shadow: inset 0px 0 2px 1px rgb(0,0,0,0.5);
+  border: none;
+  padding-left: 1em;
+  margin: auto;
+  margin-left: 5px;
+}
+
+  .haivytys {
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 5px;
+    width: 200px;
   }
 
-  .alaBoksi {
-    float: right;
+  .float-l {
+    float:left;
   }
 
-  .ninety {
-    min-width: 90%;
+  .no-border {
+    border: 0px;
+  }
+
+  .namiska {
+    background-color: #251d2f;
+    color: white;
+    padding: 10px;
+    box-shadow: 2px 2px 4px #3b2e4b;
+    float:right;
   }
 /*# sourceMappingURL=bootstrap.css.map */

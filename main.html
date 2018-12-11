@@ -105,7 +105,6 @@
 			$("#haeLeffaa").show();
 		  $('#pakoPainike').show();
 		  $('#leffat').empty();
-			$("tietoNappi").show();
 		  var url = ("https://www.finnkino.fi/xml/Events/?area="+iidee);
 		  $.get(url,function (doc){
 				var eventId = $(doc).find("ID");
@@ -113,30 +112,46 @@
 		    var kuvat = $(doc).find("EventSmallImagePortrait");
 				var synopsis = $(doc).find("ShortSynopsis");
 				var vuosi = $(doc).find("ProductionYear");
+				var rating = $(doc).find("Rating");
+				var kesto = $(doc).find("LengthInMinutes");
+				var urli = $(doc).find("EventURL");
 				/* Tämä on käytännössä täysin samoin kuin haeTeatterit()-funktiossa.
 					Jokaista tapahtumaa kohden luodaan oma <div>, jonne sijoitetaan tiedot.*/
 		    for (var j = 0; j < tapahtumat.length; j++) {
 
 		      var leffaBoksi = $('<div></div>')
-		          .addClass('leffaKortti media bg-purply rounded-more p-3 my-1 full varjo');
+		          .addClass('leffaKortti media bg-purply rounded-more p-3 full my-1 varjo noborder');
 		      $('#leffat').append(leffaBoksi);
 
 		      var thumbNail = $('<img/>').attr("src",kuvat[j].innerHTML)
 							.addClass("img-fluid");
 		      $(leffaBoksi).prepend(thumbNail);
 
-		      var desc = $("<div></div>").addClass("media-body desc ninety");
+		      var desc = $("<div></div>").addClass("media-body desc");
 		      $(leffaBoksi).append(desc);
 
 		      var otsikko = $("<h4></h4>").text((tapahtumat[j].innerHTML + " (" + vuosi[j].innerHTML+")"));
 		      $(desc).prepend(otsikko);
 
-					var tietoBoksi = $("<div></div>")
-								.addClass('alaBoksi bg-purply ninety');
-					$(leffaBoksi).append(tietoBoksi);
+					var ikaraja = $("<p></p>").text("Ikäraja: " + rating[j].innerHTML)
+								.addClass("haivytys flex-wrap d-flex float-l");
+					if (ikaraja[0].textContent == "Ikäraja: Luok_vap") {
+						ikaraja[0].textContent = "Ikäraja: Kaikille";
+					}
+					$(desc).append(ikaraja);
 
-					var kuvaus = $("<p></p>").text(synopsis[j].innerHTML);
-		      $(tietoBoksi).append(kuvaus);
+					var pituus = $("<p></p>").text("Kesto: " + kesto[j].innerHTML +" min")
+								.addClass("haivytys flex-wrap d-flex");
+					$(desc).append(pituus);
+
+					var kuvaus = $("<p><br></p>").text(synopsis[j].innerHTML);
+		      $(desc).append(kuvaus);
+
+					var osoite = urli[j].innerHTML;
+					var viePois = $("<a> Katso tiedot > </a>").attr("href",osoite)
+								.addClass("namiska rounded");
+					$(desc).append(viePois);
+
 		    }
 
 		  });
@@ -214,7 +229,6 @@
 		    $("#leffat").empty();
 				$("#pakoPainike").hide();
 				$("#haeLeffaa").hide();
-				$("#tietoNappi").hide();
 		  });
 		});
 
@@ -238,20 +252,16 @@
         <h5 class="pb-2"> Teatteri: </h5>
       <div id="scrollBox" class="teatteri pre-scrollable d-flex justify-content-center rounded-more bg-purply flex-wrap mb-1 p-2" style="max-height: 300px;">
       </div>
-        <button id="pakoPainike" type="button" class="btn btn-light mt-1" style="display:none;">< back</button>
+        <button id="pakoPainike" type="button" class="btn btn-light mt-1" style="display:none;">< sulje</button>
     </div>
   </div>
-		<div class="col-lg-9 d-flex justify-content-center flex-wrap">
+		<div class="col-lg-9 mb-5">
 		<div class="ylaPalkki col-lg-9 mb-3 full bg-purply varjo rounded d-flex justify-content-center flex-wrap" style="height:50px;">
-			<input type="text" id="haeLeffaa" class="inputBox rounded-more media-box" placeholder="Hae tapahtuman nimellä" style="display:none;">
+			<input type="text" id="haeLeffaa" placeholder="Hae leffan nimellä" class="inputBox rounded media-box" style="display:none;">
+			<h5 style="float:right; margin:auto;"> Javascript | Proja 2 | Teemu Valonen & Nader Gam </h5>
 		</div>
-     <div id="leffat" class="col-lg-9 pre-scrollable d-flex justify-content-center flex-wrap full"
-                      style="display:none;max-height:180px;">
-
-			<button id="tietoNappi" type="button" class="col-lg-9 bg-purply full" onclick="naytaLisaa()" style=""> Show more </button>
-
-			<div id="tietoBoksi" class="tietoBoksi alaBoksi">
-		</div>
+     <div id="leffat" class="pre-scrollable d-flex justify-content-center flex-wrap full"
+                      style="display:none;max-height:410px;">
    	</div>
 	</div>
  </div>
