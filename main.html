@@ -101,54 +101,57 @@
 
 /* Tämä funktio ottaa parametrinä painetun napin value-attribuuin. Se liitetään
   	URL-osoitteeseen FinnKinon "events"-XML-tiedostossa, jotta saadaan paikalliset tiedot.*/
+
 		function leffatEsiin(iidee){
 			$("#haeLeffaa").show();
 		  $('#pakoPainike').show();
 		  $('#leffat').empty();
 		  var url = ("https://www.finnkino.fi/xml/Events/?area="+iidee);
 		  $.get(url,function (doc){
-				var eventId = $(doc).find("ID");
-		    var tapahtumat = $(doc).find("OriginalTitle");
-		    var kuvat = $(doc).find("EventSmallImagePortrait");
-				var synopsis = $(doc).find("ShortSynopsis");
-				var vuosi = $(doc).find("ProductionYear");
-				var rating = $(doc).find("Rating");
-				var kesto = $(doc).find("LengthInMinutes");
-				var urli = $(doc).find("EventURL");
+				var eventId = $(doc).find("ID");											// ID = leffakohtainen tunnus
+		    var tapahtumat = $(doc).find("OriginalTitle");				// OriginalTitle = leffan nimi
+		    var kuvat = $(doc).find("EventSmallImagePortrait");		// EventSmallImagePortrait = leffan pienehkö kuvake
+				var synopsis = $(doc).find("ShortSynopsis");					// ShortSynopsis = leffan kuvaus
+				var vuosi = $(doc).find("ProductionYear");						// ProductionYear = leffan produktiovuosi
+				var rating = $(doc).find("Rating");										// Rating = leffan ikäraja
+				var kesto = $(doc).find("LengthInMinutes");						// LengthInMinutes = leffan pituus
+				var urli = $(doc).find("EventURL");										// EventURL = leffan lisätietosivun URL
+
 				/* Tämä on käytännössä täysin samoin kuin haeTeatterit()-funktiossa.
 					Jokaista tapahtumaa kohden luodaan oma <div>, jonne sijoitetaan tiedot.*/
+
 		    for (var j = 0; j < tapahtumat.length; j++) {
 
-		      var leffaBoksi = $('<div></div>')
+		      var leffaBoksi = $('<div></div>')  // leffaBoksi on oma boksi jokaiselle leffalle, johon sijoitetaan alla luetellut luotavat elementit
 		          .addClass('leffaKortti media bg-purply rounded-more p-3 full my-1 varjo noborder');
 		      $('#leffat').append(leffaBoksi);
 
-		      var thumbNail = $('<img/>').attr("src",kuvat[j].innerHTML)
+		      var thumbNail = $('<img/>').attr("src",kuvat[j].innerHTML)  // leffan pieni kuvake, sijoitetaan leffaBoksin sisään
 							.addClass("img-fluid");
 		      $(leffaBoksi).prepend(thumbNail);
 
-		      var desc = $("<div></div>").addClass("media-body desc");
-		      $(leffaBoksi).append(desc);
+		      var desc = $("<div></div>").addClass("media-body desc");  // leffan kuvaus-elementti, sijoitetaan leffaBoksin sisään,
+		      $(leffaBoksi).append(desc);																// kuvakkeen oikealle puolelle, johon tulee alla luetellut elementit
 
-		      var otsikko = $("<h4></h4>").text((tapahtumat[j].innerHTML + " (" + vuosi[j].innerHTML+")"));
+		      var otsikko = $("<h4></h4>").text((tapahtumat[j].innerHTML + " (" + vuosi[j].innerHTML+")"));  // leffan nimi, sijoitetaan leffaBoksin sisään
 		      $(desc).prepend(otsikko);
 
-					var ikaraja = $("<p></p>").text("Ikäraja: " + rating[j].innerHTML)
+					var ikaraja = $("<p></p>").text("Ikäraja: " + rating[j].innerHTML) // leffan ikäraja, sijoitetaan kuvaus-elementin sisään
 								.addClass("haivytys flex-wrap d-flex float-l");
-					if (ikaraja[0].textContent == "Ikäraja: Luok_vap") {
-						ikaraja[0].textContent = "Ikäraja: Kaikille";
+					if (ikaraja[0].textContent == "Ikäraja: Luok_vap") {  // tarkistetaan mikäli "ikaraja"-muuttujan textContentista löytyy "Luok_vap"
+						ikaraja[0].textContent = "Ikäraja: Kaikille"; 			// mikäli kyllä, sijoitetaan sille uusi arvo = "Kaikille". Tämä tehty ymmärrettävyyden vuoksi.
 					}
 					$(desc).append(ikaraja);
 
-					var pituus = $("<p></p>").text("Kesto: " + kesto[j].innerHTML +" min")
+					var pituus = $("<p></p>").text("Kesto: " + kesto[j].innerHTML +" min")		// leffan pituus minuuteissa, sijoitetaan kuvaus-elementin sisään
 								.addClass("haivytys flex-wrap d-flex");
 					$(desc).append(pituus);
 
-					var kuvaus = $("<p><br></p>").text(synopsis[j].innerHTML);
+					var kuvaus = $("<p><br></p>").text(synopsis[j].innerHTML);  // leffakohtainen kuvaus, joka sijoitetaan kuvaus-elementin sisään
 		      $(desc).append(kuvaus);
 
-					var osoite = urli[j].innerHTML;
-					var viePois = $("<a> Katso tiedot > </a>").attr("href",osoite)
+					var osoite = urli[j].innerHTML;															// leffakohtainen lisätietosivun URL
+					var viePois = $("<a> Katso tiedot > </a>").attr("href",osoite)			// luodaan a-linkki, jolle annetaan osoitteeksi osoite-muuttuja
 								.addClass("namiska rounded");
 					$(desc).append(viePois);
 
@@ -223,7 +226,9 @@
 		}
 		*/
 
-		/* Tämä on paluupainikkeen funktio. Se antaa käyttäjän tyhjentää tapahtumalistan. */
+		/* Tämä on paluupainikkeen funktio. Se antaa käyttäjän tyhjentää tapahtumalistan,
+		sekä samalla piilottaa itsensä. */
+
 		$(function(){
 		  $("#pakoPainike").click(function() {
 		    $("#leffat").empty();
@@ -234,9 +239,11 @@
 
 
 		</script>
+
+
     <div class="jumbotron jumbotron-fluid" style="background-color: #4A3A5E;">
-    <h1 class="display-2 text-center" style="color: white;">FinnKino MOVIETRON</h1>
-    <p class="lead text-center" style="color: #EBEBEB;"><br>Tää on se yks tehtävä siihen tehtävänantoon siitä yhestä kurssista. Mikähän se oli? Oliskohan ollu "Web-sovellusten kehittäminen JavaScriptillä"? Oli miten oli. Iskin tän valmiille "pohjalle" koska en jaksanu skrätsistä alottaa uutta, joten täs tää ny on. Pitäis vielä jaksaa vääntää sivu sen näköseks et täl ois jotain asiaankuuluvaakin. Syssymmällä si. <br> Höpö.</p>
+    <h2 class="display-2 text-center" style="color: white;">Finnkino-proja</h1>
+    <p class="lead text-center" style="color: #EBEBEB;"><br>Javascript yms.<br>Höpö.</p>
   </div>
 
 <div class="container"> <!-- Container starts-->
